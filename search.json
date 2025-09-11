@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Talks",
+    "section": "",
+    "text": "This is a test talk!\n\n\ntest talk\n\n\n\n\n\n\n\n\nSep 2, 2025\n\n\nAndrew Esterson\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "test-talk/index.html#this-is-a-first-slide",
+    "href": "test-talk/index.html#this-is-a-first-slide",
+    "title": "This is a test talk!",
+    "section": "This is a first slide!",
+    "text": "This is a first slide!\n\n\nthis is some test code!\n\n\nand this is some test text\n[this is a link to some helpful docs]"
+  },
+  {
+    "objectID": "test-talk/index.html#this-is-another-thing",
+    "href": "test-talk/index.html#this-is-another-thing",
+    "title": "This is a test talk!",
+    "section": "This is another thing!",
+    "text": "This is another thing!\nlets add some tension here\n…\nstill tense\n…\nok all the text is here now, phew!"
+  }
+]
