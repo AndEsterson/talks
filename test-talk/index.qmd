@@ -1,0 +1,29 @@
+---
+author: "[Andrew Esterson](https://paddyroddy.github.io)"
+date: 2025-09-02
+format: revealjs
+subtitle: "test talk"
+title: "This is a test talk!"
+---
+
+## This is a first slide!
+
+```{python}
+print(this is some test code!)
+```
+
+and this is some test text
+
+[this is a link to some helpful docs]
+
+## This is another thing!
+
+lets add some tension here
+
+...
+
+still tense
+
+...
+
+ok all the text is here now, phew!
