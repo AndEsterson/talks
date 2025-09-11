@@ -2,5 +2,5 @@ project:
   type: website
 
 format:
-html:
-  theme: cyborg
+  html:
+    theme: cyborg
