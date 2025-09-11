@@ -9,7 +9,7 @@ title: "This is a test talk!"
 ## This is a first slide!
 
 ```{python}
-print(this is some test code!)
+print("this is some test code!")
 ```
 
 and this is some test text
