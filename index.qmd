@@ -1,0 +1,7 @@
+---
+title: Talks
+format: html
+listing:
+  contents: .
+  sort: "date desc"
+---
