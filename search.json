@@ -4,20 +4,55 @@
     "href": "index.html",
     "title": "Talks",
     "section": "",
-    "text": "This is a test talk!\n\n\ntest talk\n\n\n\n\n\n\n\n\nSep 2, 2025\n\n\nAndrew Esterson\n\n\n\n\n\nNo matching items"
+    "text": "Kubeflow demo\n\n\n\n\n\n\n\n\n\n\n\nSep 12, 2025\n\n\nAndrew Esterson\n\n\n\n\n\n\n\n\n\n\n\n\nThis is a test talk!\n\n\ntest talk\n\n\n\n\n\n\n\n\nSep 2, 2025\n\n\nAndrew Esterson\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "test-talk/index.html#this-is-a-first-slide",
     "href": "test-talk/index.html#this-is-a-first-slide",
     "title": "This is a test talk!",
     "section": "This is a first slide!",
-    "text": "This is a first slide!\n\n\nthis is some test code!\n\n\nand this is some test text\n[this is a link to some helpful docs]"
+    "text": "This is a first slide!\nand this is some test text\nthis is a link to some helpful docs"
   },
   {
     "objectID": "test-talk/index.html#this-is-another-thing",
     "href": "test-talk/index.html#this-is-another-thing",
     "title": "This is a test talk!",
     "section": "This is another thing!",
-    "text": "This is another thing!\nlets add some tension here\n…\nstill tense\n…\nok all the text is here now, phew!"
+    "text": "This is another thing!\nlets add some tension here\n\nstill tense\n\n\nok all the text is here now, phew!"
+  },
+  {
+    "objectID": "kubeflow-demo/index.html#kubeflow",
+    "href": "kubeflow-demo/index.html#kubeflow",
+    "title": "Kubeflow demo",
+    "section": "Kubeflow",
+    "text": "Kubeflow"
+  },
+  {
+    "objectID": "kubeflow-demo/index.html#benefits",
+    "href": "kubeflow-demo/index.html#benefits",
+    "title": "Kubeflow demo",
+    "section": "Benefits",
+    "text": "Benefits\n\nKubernetes is very flexible! We can add/remove/change the servies we offer while keeping the same underlying core. In a few years we might offer a completely different set of services!\nSince Kubernetes doesn’t make a fundamental distinction between short-lived jobs and permanent services, we can easily integrate e.g jupyter notebooks\nCaching logic in Kubeflow pipelines lets us cut down on resource usage, and lets researchers build clear and reproducable pipelines"
+  },
+  {
+    "objectID": "kubeflow-demo/index.html#what-the-lifecycle-of-a-job-would-ideally-look-like",
+    "href": "kubeflow-demo/index.html#what-the-lifecycle-of-a-job-would-ideally-look-like",
+    "title": "Kubeflow demo",
+    "section": "What the lifecycle of a job would ideally look like",
+    "text": "What the lifecycle of a job would ideally look like\n\nA job is submitted by a user, and is validated as reasonable-looking\nThe job then enters a queue, and the user is informed about its progress\nThe job then graduates from queueing to running, and the user can view logs\nThe job then finishes in finite time with either success or failure, with a reason given for failure"
+  },
+  {
+    "objectID": "kubeflow-demo/index.html#what-the-lifecycle-of-a-job-actually-looks-like-for-now",
+    "href": "kubeflow-demo/index.html#what-the-lifecycle-of-a-job-actually-looks-like-for-now",
+    "title": "Kubeflow demo",
+    "section": "What the lifecycle of a job actually looks like (for now!)",
+    "text": "What the lifecycle of a job actually looks like (for now!)\n\nThe user can submit multiple types of resources (e.g notebooks, pipeline runs, Kubeflow Trainer jobs, inference services), which then lead to the creation of one or multiple Pod resource(s)\nIf the Pod has to wait before being scheduled to a node, the user isn’t automatically informed about this, and the reason isn’t always clear to a user (e.g there are some edge cases where user specified config will cause the Pod to never schedule)\nOnce the job is running, the user can view logs, but the interface is clunky\nWe don’t currently enforce any kind of maximum runtime, we may be able to use the for this."
+  },
+  {
+    "objectID": "kubeflow-demo/index.html#how-might-we-solve-these-problems",
+    "href": "kubeflow-demo/index.html#how-might-we-solve-these-problems",
+    "title": "Kubeflow demo",
+    "section": "How might we solve these problems?",
+    "text": "How might we solve these problems?\n\nWe deploy Prometheus/Grafana, so we could export logs and cluster Events in a sanitised way to a user specific dashboard. We could also fire user-level alerts to email/slack/teams/something else.\nWe can also use Kyverno to validate inputs, so that user jobs fail fast (but doing this for every Kubeflow component might get difficult)\nWe can use tools like the descheduler to enforce runtime limits (still a lot of work to implement this in a flexible way)"
   }
 ]

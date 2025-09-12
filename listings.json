@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/kubeflow-demo/index.html",
       "/test-talk/index.html"
     ]
   }
