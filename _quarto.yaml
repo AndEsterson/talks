@@ -7,3 +7,4 @@ format:
   revealjs:
     mermaid:
       theme: dark
+    theme: dark
