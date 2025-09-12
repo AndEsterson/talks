@@ -1,0 +1,50 @@
+---
+author: "Andrew Esterson"
+date: 2025-09-12
+format: revealjs
+subtitle: ""
+title: "Kubeflow demo"
+---
+
+## Kubeflow
+
+
+## Benefits
+
+- Kubernetes is very flexible! We can add/remove/change the servies we offer while keeping the same underlying core. In a few years we might offer a completely different set of services!
+
+- Since Kubernetes doesn't make a fundamental distinction between short-lived jobs and permanent services, we can easily integrate e.g jupyter notebooks
+
+- Caching logic in Kubeflow pipelines lets us cut down on resource usage, and lets researchers build clear and reproducable pipelines
+
+# Challenges
+
+There's still a lot we haven't worked out!
+
+## What the lifecycle of a job would ideally look like
+
+- A job is submitted by a user, and is validated as reasonable-looking
+
+- The job then enters a queue, and the user is informed about its progress
+
+- The job then graduates from queueing to running, and the user can view logs
+
+- The job then finishes in finite time with either success or failure, with a reason given for failure
+
+## What the lifecycle of a job actually looks like (for now!)
+
+- The user can submit multiple types of resources (e.g notebooks, pipeline runs, Kubeflow Trainer jobs, inference services), which then lead to the creation of one or multiple `Pod` resource(s)
+
+- If the `Pod` has to wait before being scheduled to a node, the user isn't automatically informed about this, and the reason isn't always clear to a user (e.g there are some edge cases where user specified config will cause the `Pod` to never schedule)
+
+- Once the job is running, the user can view logs, but the interface is clunky
+
+- We don't currently enforce any kind of maximum runtime, we may be able to use the  for this.
+
+## How might we solve these problems?
+
+- We deploy Prometheus/Grafana, so we could export logs and cluster `Events` in a sanitised way to a user specific dashboard. We could also fire user-level alerts to email/slack/teams/something else.
+
+- We can also use Kyverno to validate inputs, so that user jobs fail fast (but doing this for every Kubeflow component might get difficult)
+
+- We can use tools like the [descheduler](https://github.com/kubernetes-sigs/descheduler) to enforce runtime limits (still a lot of work to implement this in a flexible way)
