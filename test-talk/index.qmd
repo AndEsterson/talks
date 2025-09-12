@@ -8,10 +8,6 @@ title: "This is a test talk!"
 
 ## This is a first slide!
 
-```{python}
-print("this is some test code!")
-```
-
 and this is some test text
 
 [this is a link to some helpful docs](https://quarto.org/docs/presentations/revealjs/index.html)
