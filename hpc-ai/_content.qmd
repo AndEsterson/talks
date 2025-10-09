@@ -1,0 +1,135 @@
+## When we say ML Lifecycle, what do we mean?
+
+```{mermaid}
+flowchart LR
+  A(Foundation dataset) --> B(Foundation model training)
+  B --> C(Model finetuning)
+  H(Finetuning dataset) --> C
+  C --> G[Model evaluation]
+  G --> C
+  C --> D{Serve model}
+  D --> E[Research output]
+  D --> F[Ad-hoc testing]
+```
+
+- Iterative loop
+
+- processing data / training a model / finetuning that model / serving that model
+
+- diagram here?
+
+
+## Our platform
+
+- For UCL researchers
+
+- Kubeflow is an Open Source project designed to deploy into a Kubernetes cluster
+
+- Our cluster currently has ~8TB of memory, ~600 cpu cores, >4TB total GPU VRAM
+
+- Built on top of a larger UCL on-prem cluster (which means the total resources above are flexible)
+
+## So what does it do?
+
+Converts this
+
+```{mermaid}
+flowchart L
+  A(Foundation dataset) --> B(Foundation model training)
+  B --> C(Model finetuning)
+  H(Finetuning dataset) --> C
+  C --> G[Model evaluation]
+  G --> C
+  C --> D{Serve model}
+  D --> E[Research output]
+  D --> F[Ad-hoc testing]
+```
+
+## So what does it do?
+
+Into this
+
+![](images/kubeflow-pipelines-diagram.png)
+
+## Workflow
+```{.python filename="submit_pipeline.py"}
+import kfp
+import kfp.dsl
+
+@kfp.dsl.pipeline
+def my_pipeline():
+  """This function specifies the pipeline spec."""
+  ...
+
+kfp_client = kfp.Client()
+kfp_client.create_run_from_pipeline_func(my_pipeline)
+```
+
+
+```{.console filename="terminal"}
+python3 ./submit_pipeline.py
+```
+
+## Workflow
+```{.yaml filename="model_spec.yaml"}
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: my-inference-model
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: huggingface
+      resources:
+        requests:
+          cpu: "6"
+          memory: 18Gi
+          nvidia.com/gpu: "8"
+          ephemeral-storage: 200Gi
+      storageUri: s3://models-a-esterson/my-inference-model
+```
+
+## Workflow
+
+
+## Case Study
+
+- Finetuning a language model
+
+- Serving that model
+
+- Interacting through a notebook
+
+## Challenges
+
+- It takes time for people to adapt to a new (and different!) framework
+  - We need to write really good documentation!
+
+- Users can't be expected to be Kubernetes experts
+  - We need to abstract away complexity and provide clear error messaging whenever things break 
+
+- Kubernetes is extremely sophisticated for long-running services, but the ecosystem for HPC is still developing
+  - Meaning we have to do more internal plumbing than usual
+
+## Why Bother?
+
+### From our perspective
+
+- Building on top of Kubernetes means more space to adapt in the future, and more flexibility about hardware
+
+- Having users run containerised workloads makes supporting complex dependencies easy - if they can build the container, they can run it
+
+### From the user perspective
+
+- Access to a notebook inside the cluster simplifies initial investigation of results
+
+## Where do we go from here?
+
+- Expanding access to more users so that we can write better docs, fix bugs and improve performance
+
+- Building on top of Kubernetes gives us flexibility to evolve the platform, we can add new services or modify old ones
+
+- Exposing services over API makes it easy for us to build higher-level abstractions (e.g Github Actions)
+
+- Hooking up the cluster with AWS to make a joint cloud/on-prem cluster?
