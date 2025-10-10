@@ -18,7 +18,7 @@ flowchart LR
 
 - Uses Kubeflow, an Open Source project designed to deploy into a Kubernetes cluster
 
-- Our cluster currently has ~8TB of memory, ~600 cpu cores, >4TB total GPU VRAM
+- Our cluster currently has ~8TB of memory, ~600 cpu cores, >4TB total GPU VRAM - mostly NVIDIA A100 40GB and 80GB with 8-way NVLinks
 
 - Built on top of a larger UCL on-prem cluster (which means the total resources above are flexible)
 
@@ -133,7 +133,7 @@ flowchart LR
 
 ## Currently our users are...
 
-- Serving a model using Kserve to run OCR without data leaving the UCL network
+- Serving a model using Kserve to run OCR text recognition without data leaving the UCL network
 
 - Finetuning a language model to use for a RAG application
 
