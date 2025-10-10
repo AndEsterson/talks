@@ -114,7 +114,6 @@ flowchart LR
     F[Ad-hoc testing]
   end
 
-  A --> B
   C --> D
   D --> E(Research Output)
   D --> F
