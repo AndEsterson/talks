@@ -1,5 +1,8 @@
 format:
   revealjs:
+    mermaid:
+      theme: light
+    theme: light
     incremental: true
     css: css/style.css
     slide-number: true
