@@ -3,10 +3,10 @@ project:
 
 format:
   html:
-    theme: cyborg
+    theme: default
   revealjs:
     mermaid:
-      theme: dark
+      theme: default
     filters:
       - _filters/slugify.lua
-    theme: dark
+    theme: default
