@@ -2,7 +2,7 @@
 title: Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle
 author: Andrew Esterson
 institute: University College London
-title-image: images/headshot.jpeg
+title-image: images/arc-logo.svg
 title-image-width: 40%
 format:
   revealjs:
