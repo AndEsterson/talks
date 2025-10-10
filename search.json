@@ -84,13 +84,6 @@
     "text": "Where do we go from here?\n\nExpanding access to more users so that we can write better docs, fix bugs and improve performance\nPotentially expand the services we offer\nBuild higher-level abstractions and integrations (e.g Github Actions)\nLinking the cluster to a cloud provider so that we can dip into the cloud when demand spikes?"
   },
   {
-    "objectID": "hpc-ai/index.html#links",
-    "href": "hpc-ai/index.html#links",
-    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
-    "section": "Links",
-    "text": "Links\nThis talk - https://andesterson.github.io/talks/hpc-ai\n\n\n\n    \n\nKubeflow - https://www.kubeflow.org\n\n\n\n    \n\nUCL-ARC - https://www.ucl.ac.uk/advanced-research-computing"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Talks",
