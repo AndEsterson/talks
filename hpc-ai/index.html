@@ -334,7 +334,7 @@ Andrew Esterson
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  subgraph S4 [Centralised UCL Storage  .]
+  subgraph S4 [Centralised UCL Storage]
     A(Foundation dataset)
     H(Finetuning dataset)
   end
@@ -342,18 +342,18 @@ Andrew Esterson
   A --&gt; B(Foundation model training)
   H --&gt; C(Model finetuning)
 
-  subgraph S1 [Kubeflow Pipelines  .]
+  subgraph S1 [Kubeflow Pipelines]
     B --&gt; C
     C --&gt; G[Model evaluation]
     G --&gt; C
   end
 
-  subgraph S2 [Kserve  .]
+  subgraph S2 [Kserve]
     D{Serve model}
   end
 
 
-  subgraph S3 [Kubeflow Notebooks  .]
+  subgraph S3 [Kubeflow Notebooks]
     F[Ad-hoc testing]
   end
 
