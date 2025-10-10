@@ -7,4 +7,6 @@ format:
   revealjs:
     mermaid:
       theme: dark
+    filters:
+      - _filters/slugify.lua
     theme: dark
