@@ -1,24 +1,94 @@
 [
   {
+    "objectID": "hpc-ai/index.html#when-we-say-ml-lifecycle-what-do-we-mean",
+    "href": "hpc-ai/index.html#when-we-say-ml-lifecycle-what-do-we-mean",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "When we say ML Lifecycle, what do we mean?",
+    "text": "When we say ML Lifecycle, what do we mean?\n\n\n\n\n\nflowchart LR\n  A(Foundation dataset) --&gt; B(Foundation model training)\n  B --&gt; C(Model finetuning)\n  H(Finetuning dataset) --&gt; C\n  C --&gt; G[Model evaluation]\n  G --&gt; C\n  C --&gt; D{Serve model}\n  D --&gt; E[Research output]\n  D --&gt; F[Ad-hoc testing]"
+  },
+  {
+    "objectID": "hpc-ai/index.html#our-platform",
+    "href": "hpc-ai/index.html#our-platform",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "Our platform",
+    "text": "Our platform\n\nFor UCL researchers (and external users in the long term)\nUses Kubeflow, an Open Source project designed to deploy into a Kubernetes cluster\nOur cluster currently has ~8TB of memory, ~600 cpu cores, &gt;4TB total GPU VRAM\nBuilt on top of a larger UCL on-prem cluster (which means the total resources above are flexible)"
+  },
+  {
+    "objectID": "hpc-ai/index.html#so-what-does-it-do",
+    "href": "hpc-ai/index.html#so-what-does-it-do",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "So what does it do?",
+    "text": "So what does it do?\nConverts this\n\n\n\n\n\nflowchart LR\n  A(Foundation dataset) --&gt; B(Foundation model training)\n  B --&gt; C(Model finetuning)\n  H(Finetuning dataset) --&gt; C\n  C --&gt; G[Model evaluation]\n  G --&gt; C\n  C --&gt; D{Serve model}\n  D --&gt; E[Research output]\n  D --&gt; F[Ad-hoc testing]"
+  },
+  {
+    "objectID": "hpc-ai/index.html#so-what-does-it-do-1",
+    "href": "hpc-ai/index.html#so-what-does-it-do-1",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "So what does it do?",
+    "text": "So what does it do?\nInto this"
+  },
+  {
+    "objectID": "hpc-ai/index.html#workflow",
+    "href": "hpc-ai/index.html#workflow",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "Workflow",
+    "text": "Workflow\n\n\nsubmit_pipeline.py\n\nimport kfp\nimport kfp.dsl\n\n@kfp.dsl.pipeline\ndef my_pipeline():\n  \"\"\"This function specifies the pipeline spec.\"\"\"\n  ...\n\nkfp_client = kfp.Client()\nkfp_client.create_run_from_pipeline_func(my_pipeline)\n\n\n\nterminal\n\npython3 ./submit_pipeline.py"
+  },
+  {
+    "objectID": "hpc-ai/index.html#workflow-1",
+    "href": "hpc-ai/index.html#workflow-1",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "Workflow",
+    "text": "Workflow\n\n\nmodel_spec.yaml\n\napiVersion: serving.kserve.io/v1beta1\nkind: InferenceService\nmetadata:\n  name: my-inference-model\nspec:\n  predictor:\n    model:\n      modelFormat:\n        name: huggingface\n      resources:\n        requests:\n          cpu: \"32\"\n          memory: 180Gi\n          nvidia.com/gpu: \"8\"\n          ephemeral-storage: 400Gi\n      storageUri: s3://models-a-esterson/my-inference-model"
+  },
+  {
+    "objectID": "hpc-ai/index.html#workflow-2",
+    "href": "hpc-ai/index.html#workflow-2",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "Workflow",
+    "text": "Workflow"
+  },
+  {
+    "objectID": "hpc-ai/index.html#workflow-3",
+    "href": "hpc-ai/index.html#workflow-3",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "Workflow",
+    "text": "Workflow\n\n\n\n\n\nflowchart LR\n  subgraph S4 [Centralised UCL Storage  .]\n    A(Foundation dataset)\n    H(Finetuning dataset)\n  end\n\n  A --&gt; B(Foundation model training)\n  H --&gt; C(Model finetuning)\n\n  subgraph S1 [Kubeflow Pipelines  .]\n    B --&gt; C\n    C --&gt; G[Model evaluation]\n    G --&gt; C\n  end\n\n  subgraph S2 [Kserve  .]\n    D{Serve model}\n  end\n\n\n  subgraph S3 [Kubeflow Notebooks  .]\n    F[Ad-hoc testing]\n  end\n\n  A --&gt; B\n  C --&gt; D\n  D --&gt; E(Research Output)\n  D --&gt; F\n\n  style S1 fill:#add8e6,fill-opacity:0.25,stroke:#5b9bd5,stroke-width:1px\n  style S2 fill:#90ee90,fill-opacity:0.25,stroke:#70ad47,stroke-width:1px\n  style S3 fill:#f0ee90,fill-opacity:0.25,stroke:#f0ad47,stroke-width:1px\n  style S4 fill:#d9b3ff,fill-opacity:0.25,stroke:#9b59b6,stroke-width:1px"
+  },
+  {
+    "objectID": "hpc-ai/index.html#workflow-4",
+    "href": "hpc-ai/index.html#workflow-4",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "Workflow",
+    "text": "Workflow\n\nAll of these components share common:\n\nstorage\nresource quotas\nauthentication"
+  },
+  {
+    "objectID": "hpc-ai/index.html#currently-our-users-are",
+    "href": "hpc-ai/index.html#currently-our-users-are",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "Currently our users are…",
+    "text": "Currently our users are…\n\nServing a model using Kserve to run OCR without data leaving the UCL network\nFinetuning a language model to use for a RAG application\nTraining foundation vision models for medical imaging\nWe’d like to give access to more users to explore loads more problems!"
+  },
+  {
+    "objectID": "hpc-ai/index.html#challenges",
+    "href": "hpc-ai/index.html#challenges",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "Challenges",
+    "text": "Challenges\n\nIt takes time for people to adapt to a new framework\n\nWe need to write really good documentation!\n\nUsers can’t be expected to be Kubernetes experts\n\nWe need to abstract away complexity\n\nThe ecosystem for HPC on Kubernetes is still developing\n\nMeaning we have to do more internal plumbing than usual"
+  },
+  {
+    "objectID": "hpc-ai/index.html#where-do-we-go-from-here",
+    "href": "hpc-ai/index.html#where-do-we-go-from-here",
+    "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
+    "section": "Where do we go from here?",
+    "text": "Where do we go from here?\n\nExpanding access to more users so that we can write better docs, fix bugs and improve performance\nPotentially expand the services we offer\nBuild higher-level abstractions and integrations (e.g Github Actions)\nLinking the cluster to a cloud provider so that we can dip into the cloud when demand spikes?"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Talks",
     "section": "",
-    "text": "Kubeflow demo\n\n\n\n\n\n\n\n\n\n\n\nSep 12, 2025\n\n\nAndrew Esterson\n\n\n\n\n\n\n\n\n\n\n\n\nThis is a test talk!\n\n\ntest talk\n\n\n\n\n\n\n\n\nSep 2, 2025\n\n\nAndrew Esterson\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "test-talk/index.html#this-is-a-first-slide",
-    "href": "test-talk/index.html#this-is-a-first-slide",
-    "title": "This is a test talk!",
-    "section": "This is a first slide!",
-    "text": "This is a first slide!\nand this is some test text\nthis is a link to some helpful docs"
-  },
-  {
-    "objectID": "test-talk/index.html#this-is-another-thing",
-    "href": "test-talk/index.html#this-is-another-thing",
-    "title": "This is a test talk!",
-    "section": "This is another thing!",
-    "text": "This is another thing!\nlets add some tension here\n\nstill tense\n\n\nok all the text is here now, phew!"
+    "text": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle\n\n\n\n\n\n\n\n\n\n\n\nAndrew Esterson\n\n\n\n\n\n\n\n\n\n\n\n\nKubeflow demo\n\n\n\n\n\n\n\n\n\n\n\nSep 12, 2025\n\n\nAndrew Esterson\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "kubeflow-demo/index.html#kubeflow",

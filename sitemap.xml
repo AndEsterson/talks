@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://AndEsterson.github.io/talks/index.html</loc>
-    <lastmod>2025-09-11T21:32:44.397Z</lastmod>
+    <loc>https://AndEsterson.github.io/talks/hpc-ai/index.html</loc>
+    <lastmod>2025-10-10T10:35:48.016Z</lastmod>
   </url>
   <url>
-    <loc>https://AndEsterson.github.io/talks/test-talk/index.html</loc>
-    <lastmod>2025-09-12T09:57:40.664Z</lastmod>
+    <loc>https://AndEsterson.github.io/talks/index.html</loc>
+    <lastmod>2025-10-10T10:35:48.017Z</lastmod>
   </url>
   <url>
     <loc>https://AndEsterson.github.io/talks/kubeflow-demo/index.html</loc>
-    <lastmod>2025-09-12T09:38:25.710Z</lastmod>
+    <lastmod>2025-10-10T10:35:48.017Z</lastmod>
   </url>
 </urlset>
