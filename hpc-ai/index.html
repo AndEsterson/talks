@@ -188,6 +188,7 @@
       margin-right: 0; 
     }
   </style>
+  <meta name="mermaid-theme" content="default">
   <script src="index_files/libs/quarto-diagram/mermaid.min.js"></script>
   <script src="index_files/libs/quarto-diagram/mermaid-init.js"></script>
   <link href="index_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
@@ -325,7 +326,7 @@
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  subgraph S4 [Centralised UCL Storage  .]
+  subgraph S4 [Centralised UCL Storage]
     A(Foundation dataset)
     H(Finetuning dataset)
   end
@@ -333,18 +334,18 @@
   A --&gt; B(Foundation model training)
   H --&gt; C(Model finetuning)
 
-  subgraph S1 [Kubeflow Pipelines  .]
+  subgraph S1 [Kubeflow Pipelines]
     B --&gt; C
     C --&gt; G[Model evaluation]
     G --&gt; C
   end
 
-  subgraph S2 [Kserve  .]
+  subgraph S2 [Kserve]
     D{Serve model}
   end
 
 
-  subgraph S3 [Kubeflow Notebooks  .]
+  subgraph S3 [Kubeflow Notebooks]
     F[Ad-hoc testing]
   end
 
@@ -409,6 +410,21 @@
 <li class="fragment"><p>Build higher-level abstractions and integrations (e.g Github Actions)</p></li>
 <li class="fragment"><p>Linking the cluster to a cloud provider so that we can dip into the cloud when demand spikes?</p></li>
 </ul>
+</section>
+<section id="links" class="slide level2">
+<h2>Links</h2>
+<p>This talk - https://andesterson.github.io/talks/hpc-ai</p>
+<div style="text-align:center;">
+{{&lt; qrcode https://andesterson.github.io/talks/hpc-ai &gt;}}
+</div>
+Kubeflow - https://www.kubeflow.org
+<div class="center;">
+{{&lt; qrcode https://www.kubeflow.org &gt;}}
+</div>
+<p>UCL-ARC - https://www.ucl.ac.uk/advanced-research-computing</p>
+<div style="text-align:center;">
+{{&lt; qrcode https://www.ucl.ac.uk/advanced-research-computing/ &gt;}}
+</div>
 
 </section>
     </div>

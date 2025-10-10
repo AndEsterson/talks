@@ -161,3 +161,22 @@ flowchart LR
 - Build higher-level abstractions and integrations (e.g Github Actions)
 
 - Linking the cluster to a cloud provider so that we can dip into the cloud when demand spikes?
+
+## Links
+
+This talk - https://andesterson.github.io/talks/hpc-ai
+
+<div style="text-align:center;">
+{{< qrcode https://andesterson.github.io/talks/hpc-ai >}}
+</div>
+
+Kubeflow - https://www.kubeflow.org
+<div class="center;">
+{{< qrcode https://www.kubeflow.org >}}
+</div>
+
+UCL-ARC - https://www.ucl.ac.uk/advanced-research-computing 
+
+<div style="text-align:center;">
+{{< qrcode https://www.ucl.ac.uk/advanced-research-computing/ >}}
+</div>

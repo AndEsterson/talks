@@ -1,8 +1,10 @@
 format:
+  html:
+    theme: lumen
   revealjs:
     mermaid:
-      theme: light
-    theme: light
+      theme: default
+    theme: default
     incremental: true
     css: css/style.css
     slide-number: true
