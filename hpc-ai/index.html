@@ -226,17 +226,12 @@
 </div>
 </div>
 </div>
-<ul>
-<li class="fragment"><p>Iterative loop</p></li>
-<li class="fragment"><p>processing data / training a model / finetuning that model / serving that model</p></li>
-<li class="fragment"><p>diagram here?</p></li>
-</ul>
 </section>
 <section id="our-platform" class="slide level2">
 <h2>Our platform</h2>
 <ul>
-<li class="fragment"><p>For UCL researchers</p></li>
-<li class="fragment"><p>Kubeflow is an Open Source project designed to deploy into a Kubernetes cluster</p></li>
+<li class="fragment"><p>For UCL researchers (and external users in the long term)</p></li>
+<li class="fragment"><p>Uses Kubeflow, an Open Source project designed to deploy into a Kubernetes cluster</p></li>
 <li class="fragment"><p>Our cluster currently has ~8TB of memory, ~600 cpu cores, &gt;4TB total GPU VRAM</p></li>
 <li class="fragment"><p>Built on top of a larger UCL on-prem cluster (which means the total resources above are flexible)</p></li>
 </ul>
@@ -249,7 +244,7 @@
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart L
+<pre class="mermaid mermaid-js">flowchart LR
   A(Foundation dataset) --&gt; B(Foundation model training)
   B --&gt; C(Model finetuning)
   H(Finetuning dataset) --&gt; C
@@ -311,57 +306,108 @@
 <span id="cb3-9"><a href=""></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> huggingface</span></span>
 <span id="cb3-10"><a href=""></a><span class="at">      </span><span class="fu">resources</span><span class="kw">:</span></span>
 <span id="cb3-11"><a href=""></a><span class="at">        </span><span class="fu">requests</span><span class="kw">:</span></span>
-<span id="cb3-12"><a href=""></a><span class="at">          </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">"6"</span></span>
-<span id="cb3-13"><a href=""></a><span class="at">          </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> 18Gi</span></span>
+<span id="cb3-12"><a href=""></a><span class="at">          </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">"32"</span></span>
+<span id="cb3-13"><a href=""></a><span class="at">          </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> 180Gi</span></span>
 <span id="cb3-14"><a href=""></a><span class="at">          </span><span class="fu">nvidia.com/gpu</span><span class="kw">:</span><span class="at"> </span><span class="st">"8"</span></span>
-<span id="cb3-15"><a href=""></a><span class="at">          </span><span class="fu">ephemeral-storage</span><span class="kw">:</span><span class="at"> 200Gi</span></span>
+<span id="cb3-15"><a href=""></a><span class="at">          </span><span class="fu">ephemeral-storage</span><span class="kw">:</span><span class="at"> 400Gi</span></span>
 <span id="cb3-16"><a href=""></a><span class="at">      </span><span class="fu">storageUri</span><span class="kw">:</span><span class="at"> s3://models-a-esterson/my-inference-model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="case-study" class="slide level2">
-<h2>Case Study</h2>
+<section id="workflow-2" class="slide level2">
+<h2>Workflow</h2>
+
+<img data-src="images/kubeflow-notebook-ui.png" class="r-stretch"></section>
+<section id="workflow-3" class="slide level2">
+<h2>Workflow</h2>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  subgraph S4 [Centralised UCL Storage  .]
+    A(Foundation dataset)
+    H(Finetuning dataset)
+  end
+
+  A --&gt; B(Foundation model training)
+  H --&gt; C(Model finetuning)
+
+  subgraph S1 [Kubeflow Pipelines  .]
+    B --&gt; C
+    C --&gt; G[Model evaluation]
+    G --&gt; C
+  end
+
+  subgraph S2 [Kserve  .]
+    D{Serve model}
+  end
+
+
+  subgraph S3 [Kubeflow Notebooks  .]
+    F[Ad-hoc testing]
+  end
+
+  A --&gt; B
+  C --&gt; D
+  D --&gt; E(Research Output)
+  D --&gt; F
+
+  style S1 fill:#add8e6,fill-opacity:0.25,stroke:#5b9bd5,stroke-width:1px
+  style S2 fill:#90ee90,fill-opacity:0.25,stroke:#70ad47,stroke-width:1px
+  style S3 fill:#f0ee90,fill-opacity:0.25,stroke:#f0ad47,stroke-width:1px
+  style S4 fill:#d9b3ff,fill-opacity:0.25,stroke:#9b59b6,stroke-width:1px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="workflow-4" class="slide level2">
+<h2>Workflow</h2>
 <ul>
-<li class="fragment"><p>Finetuning a language model</p></li>
-<li class="fragment"><p>Serving that model</p></li>
-<li class="fragment"><p>Interacting through a notebook</p></li>
+<li class="fragment">All of these components share common:
+<ul>
+<li class="fragment">storage</li>
+<li class="fragment">resource quotas</li>
+<li class="fragment">authentication</li>
+</ul></li>
+</ul>
+</section>
+<section id="currently-our-users-are" class="slide level2">
+<h2>Currently our users are…</h2>
+<ul>
+<li class="fragment"><p>Serving a model using Kserve to run OCR without data leaving the UCL network</p></li>
+<li class="fragment"><p>Finetuning a language model to use for a RAG application</p></li>
+<li class="fragment"><p>Training foundation vision models for medical imaging</p></li>
+<li class="fragment"><p>We’d like to give access to more users to explore loads more problems!</p></li>
 </ul>
 </section>
 <section id="challenges" class="slide level2">
 <h2>Challenges</h2>
 <ul>
-<li class="fragment">It takes time for people to adapt to a new (and different!) framework
+<li class="fragment">It takes time for people to adapt to a new framework
 <ul>
 <li class="fragment">We need to write really good documentation!</li>
 </ul></li>
 <li class="fragment">Users can’t be expected to be Kubernetes experts
 <ul>
-<li class="fragment">We need to abstract away complexity and provide clear error messaging whenever things break</li>
+<li class="fragment">We need to abstract away complexity</li>
 </ul></li>
-<li class="fragment">Kubernetes is extremely sophisticated for long-running services, but the ecosystem for HPC is still developing
+<li class="fragment">The ecosystem for HPC on Kubernetes is still developing
 <ul>
 <li class="fragment">Meaning we have to do more internal plumbing than usual</li>
 </ul></li>
-</ul>
-</section>
-<section id="why-bother" class="slide level2">
-<h2>Why Bother?</h2>
-<h3 id="from-our-perspective">From our perspective</h3>
-<ul>
-<li class="fragment"><p>Building on top of Kubernetes means more space to adapt in the future, and more flexibility about hardware</p></li>
-<li class="fragment"><p>Having users run containerised workloads makes supporting complex dependencies easy - if they can build the container, they can run it</p></li>
-</ul>
-<h3 id="from-the-user-perspective">From the user perspective</h3>
-<ul>
-<li class="fragment">Access to a notebook inside the cluster simplifies initial investigation of results</li>
 </ul>
 </section>
 <section id="where-do-we-go-from-here" class="slide level2">
 <h2>Where do we go from here?</h2>
 <ul>
 <li class="fragment"><p>Expanding access to more users so that we can write better docs, fix bugs and improve performance</p></li>
-<li class="fragment"><p>Building on top of Kubernetes gives us flexibility to evolve the platform, we can add new services or modify old ones</p></li>
-<li class="fragment"><p>Exposing services over API makes it easy for us to build higher-level abstractions (e.g Github Actions)</p></li>
-<li class="fragment"><p>Hooking up the cluster with AWS to make a joint cloud/on-prem cluster?</p></li>
+<li class="fragment"><p>Potentially expand the services we offer</p></li>
+<li class="fragment"><p>Build higher-level abstractions and integrations (e.g Github Actions)</p></li>
+<li class="fragment"><p>Linking the cluster to a cloud provider so that we can dip into the cloud when demand spikes?</p></li>
 </ul>
 
 </section>
