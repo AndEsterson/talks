@@ -11,7 +11,7 @@
     "href": "hpc-ai/index.html#our-platform",
     "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
     "section": "Our platform",
-    "text": "Our platform\n\nFor UCL researchers (and external users in the long term)\nUses Kubeflow, an Open Source project designed to deploy into a Kubernetes cluster\nOur cluster currently has ~8TB of memory, ~600 cpu cores, &gt;4TB total GPU VRAM\nBuilt on top of a larger UCL on-prem cluster (which means the total resources above are flexible)"
+    "text": "Our platform\n\nFor UCL researchers (and external users in the long term)\nUses Kubeflow, an Open Source project designed to deploy into a Kubernetes cluster\nOur cluster currently has ~8TB of memory, ~600 cpu cores, &gt;4TB total GPU VRAM - mostly NVIDIA A100 40GB and 80GB with 8-way NVLinks\nBuilt on top of a larger UCL on-prem cluster (which means the total resources above are flexible)"
   },
   {
     "objectID": "hpc-ai/index.html#so-what-does-it-do",
@@ -67,7 +67,7 @@
     "href": "hpc-ai/index.html#currently-our-users-are",
     "title": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle",
     "section": "Currently our users are…",
-    "text": "Currently our users are…\n\nServing a model using Kserve to run OCR without data leaving the UCL network\nFinetuning a language model to use for a RAG application\nTraining foundation vision models for medical imaging\nWe’d like to give access to more users to explore loads more problems!"
+    "text": "Currently our users are…\n\nServing a model using Kserve to run OCR text recognition without data leaving the UCL network\nFinetuning a language model to use for a RAG application\nTraining foundation vision models for medical imaging\nWe’d like to give access to more users to explore loads more problems!"
   },
   {
     "objectID": "hpc-ai/index.html#challenges",

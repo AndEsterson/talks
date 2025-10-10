@@ -241,7 +241,7 @@ Andrew Esterson
 <ul>
 <li><p>For UCL researchers (and external users in the long term)</p></li>
 <li><p>Uses Kubeflow, an Open Source project designed to deploy into a Kubernetes cluster</p></li>
-<li><p>Our cluster currently has ~8TB of memory, ~600 cpu cores, &gt;4TB total GPU VRAM</p></li>
+<li><p>Our cluster currently has ~8TB of memory, ~600 cpu cores, &gt;4TB total GPU VRAM - mostly NVIDIA A100 40GB and 80GB with 8-way NVLinks</p></li>
 <li><p>Built on top of a larger UCL on-prem cluster (which means the total resources above are flexible)</p></li>
 </ul>
 </section>
@@ -387,7 +387,7 @@ Andrew Esterson
 <section id="currently-our-users-are" class="slide level2">
 <h2>Currently our users are…</h2>
 <ul>
-<li><p>Serving a model using Kserve to run OCR without data leaving the UCL network</p></li>
+<li><p>Serving a model using Kserve to run OCR text recognition without data leaving the UCL network</p></li>
 <li><p>Finetuning a language model to use for a RAG application</p></li>
 <li><p>Training foundation vision models for medical imaging</p></li>
 <li><p>We’d like to give access to more users to explore loads more problems!</p></li>
