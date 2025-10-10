@@ -333,7 +333,7 @@ Andrew Esterson
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  subgraph S4 [Centralised UCL Storage]
+  subgraph S4 [Centralised UCL Storage  .]
     A(Foundation dataset)
     H(Finetuning dataset)
   end
@@ -341,18 +341,18 @@ Andrew Esterson
   A --&gt; B(Foundation model training)
   H --&gt; C(Model finetuning)
 
-  subgraph S1 [Kubeflow Pipelines]
+  subgraph S1 [Kubeflow Pipelines  .]
     B --&gt; C
     C --&gt; G[Model evaluation]
     G --&gt; C
   end
 
-  subgraph S2 [Kserve]
+  subgraph S2 [Kserve  .]
     D{Serve model}
   end
 
 
-  subgraph S3 [Kubeflow Notebooks]
+  subgraph S3 [Kubeflow Notebooks  .]
     F[Ad-hoc testing]
   end
 
@@ -423,7 +423,7 @@ Andrew Esterson
 <div class="quarto-layout-panel" data-layout="[22,78]">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 22.0%;justify-content: flex-start;">
-<p>Slides at <a href="&quot;https://andesterson.github.io/talks/?meta:slug">https://andesterson.github.io/talks/<strong>?meta:slug</strong></a></p>
+<p>Slides at <a href="https://andesterson.github.io/talks/hpc-ai">https://andesterson.github.io/talks/hpc-ai</a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 78.0%;justify-content: flex-start;">
 <div id="" class="qrcode"></div>
@@ -431,7 +431,7 @@ Andrew Esterson
 (function() {
   var script = document.currentScript;
   var qrcode = script.previousElementSibling;
-  qrcode.qrcode = new QRCode(qrcode, {"colorDark":"#ffffff","colorLight":"#000000","height":"550","text":"https://andesterson.github.io/talks/?meta:slug","width":"550"});
+  qrcode.qrcode = new QRCode(qrcode, {"colorDark":"#ffffff","colorLight":"#000000","height":"550","text":"https://andesterson.github.io/talks/hpc-ai","width":"550"});
   script.remove();
 })();
 </script>
