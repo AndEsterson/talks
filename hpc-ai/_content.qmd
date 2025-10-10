@@ -91,7 +91,7 @@ spec:
 
 ```{mermaid}
 flowchart LR
-  subgraph S4 [Centralised UCL Storage  .]
+  subgraph S4 [Centralised UCL Storage]
     A(Foundation dataset)
     H(Finetuning dataset)
   end
@@ -99,18 +99,18 @@ flowchart LR
   A --> B(Foundation model training)
   H --> C(Model finetuning)
 
-  subgraph S1 [Kubeflow Pipelines  .]
+  subgraph S1 [Kubeflow Pipelines]
     B --> C
     C --> G[Model evaluation]
     G --> C
   end
 
-  subgraph S2 [Kserve  .]
+  subgraph S2 [Kserve]
     D{Serve model}
   end
 
 
-  subgraph S3 [Kubeflow Notebooks  .]
+  subgraph S3 [Kubeflow Notebooks]
     F[Ad-hoc testing]
   end
 
