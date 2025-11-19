@@ -2,21 +2,21 @@
   {
     "objectID": "kubeflow-trainer-proposal/index.html#kubeflow-trainer-out-of-the-box",
     "href": "kubeflow-trainer-proposal/index.html#kubeflow-trainer-out-of-the-box",
-    "title": "Kubeflow Trainer Workflow",
+    "title": "Extending Kubeflow Trainer for ML/Ops usecases",
     "section": "Kubeflow Trainer out of the box",
     "text": "Kubeflow Trainer out of the box\n\n\n\n\n\nflowchart LR\n  A(user submits a job .) --&gt; B(TrainJob created .)\n  B --&gt; C(Pods are .\n          created)\n  C --&gt; D(Pods run to \n          completion/failure ..)\n  D --&gt; E(Trainjob is updated .. \n          to reflect\n          completion/failure ..)"
   },
   {
     "objectID": "kubeflow-trainer-proposal/index.html#some-problems",
     "href": "kubeflow-trainer-proposal/index.html#some-problems",
-    "title": "Kubeflow Trainer Workflow",
+    "title": "Extending Kubeflow Trainer for ML/Ops usecases",
     "section": "Some problems",
     "text": "Some problems\n\nWhat if the pods need to queue for resources? We have no gang scheduling, no shared resource pools, and no fairness scheduling\nHow does the user see the logs for the job? Currently they must manually watch the pod logs in real time\nWhat happens to stale Trainjobs? Currently they stay there forever, steadily increaasing the size of the etcd database"
   },
   {
     "objectID": "kubeflow-trainer-proposal/index.html#updated-kubeflow-trainer",
     "href": "kubeflow-trainer-proposal/index.html#updated-kubeflow-trainer",
-    "title": "Kubeflow Trainer Workflow",
+    "title": "Extending Kubeflow Trainer for ML/Ops usecases",
     "section": "Updated Kubeflow Trainer",
     "text": "Updated Kubeflow Trainer\n\n\n\n\n\n%%{init: {\n\"flowchart\": {\n  \"rankSpacing\": 40\n}\n}}%%\nflowchart LR\n  classDef withmargines fill-opacity:0.0,color:#FFFFFF,stroke-width:0px;\n  A(User submits a job .) --&gt; B(TrainJob created .)\n  C --&gt; D(Pods run to \n          completion/failure .)\n  D --&gt; E(Trainjob is updated ..\n          to reflect \n          completion/failure ..)\n  B --&gt; Z\n  Z2 --&gt; C(Pods are created .)\n  Z3 --&gt; C\n  C --&gt; X\n  C --&gt; W\n  E --&gt; Y(Delete jobs which \n          have been finished .\n          for over 1 week)\n\n  subgraph volcano [Volcano\n                    Scheduler .]\n    direction LR\n    Z(Volcano PodGroup ..\n      created)\n    Z1(Check enough resources ..\n      available to schedule\n      the TrainJob)\n    Z2(Borrow resources\n      from other pools\n      if required and allowed ..)\n    Z3(Reclaim resources\n      from other pools\n      if required and possible ..)\n    \n    Z --&gt; Z1\n    Z1 --&gt; Z2\n    Z1 --&gt; Z3\n  end\n\n  subgraph loki [Loki \n                Log persistence .]\n    foo1[\"&lt;p style='width:100px;height:0px;margin:0'&gt;Invisible !!!/p&gt;\"]:::withmargines\n    foo2[\"&lt;p style='width:100px;height:0px;margin:0'&gt;Invisible !!!/p&gt;\"]:::withmargines\n    X1[(Logs are forwarded ..\n      from Alloy to\n      the Loki database)]\n      X2{{ Grafana queries Loki\n      for admin dashboards .. }}\n      X3{{ User facing \n      web-app queries Loki .. }}\n      X4{{ User directly .\n      queries Loki }}\n      X( Pod logs are collected ..\n      by Grafana Alloy )\n    X2 --&gt; X1\n    X3 ---&gt; X1\n    X4 ---&gt; X1\n    X --&gt; X1\n  end\n\n  subgraph RDSS .\n    W[(data written to\n        user's RDSS project ..)]\n  end\n  subgraph kyverno [Kyverno\n                    cleanup .]\n    Y\n  end"
   },
@@ -60,7 +60,7 @@
     "href": "index.html",
     "title": "Talks",
     "section": "",
-    "text": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle\n\n\n\n\n\n\n\n\n\n\n\nAndrew Esterson\n\n\n\n\n\n\n\n\n\n\n\n\nKubeflow Trainer Workflow\n\n\n\n\n\n\n\n\n\n\n\nOct 19, 2025\n\n\nAndrew Esterson\n\n\n\n\n\n\n\n\n\n\n\n\nKubeflow demo\n\n\n\n\n\n\n\n\n\n\n\nSep 12, 2025\n\n\nAndrew Esterson\n\n\n\n\n\nNo matching items"
+    "text": "Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle\n\n\n\n\n\n\n\n\n\n\n\nAndrew Esterson\n\n\n\n\n\n\n\n\n\n\n\n\nExtending Kubeflow Trainer for ML/Ops usecases\n\n\n\n\n\n\n\n\n\n\n\nOct 19, 2025\n\n\nAndrew Esterson\n\n\n\n\n\n\n\n\n\n\n\n\nKubeflow demo\n\n\n\n\n\n\n\n\n\n\n\nSep 12, 2025\n\n\nAndrew Esterson\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "hpc-ai/index.html#when-we-say-ml-lifecycle-what-do-we-mean",
