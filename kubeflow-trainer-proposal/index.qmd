@@ -3,7 +3,7 @@ author: "Andrew Esterson"
 date: 2025-10-19
 format: revealjs
 subtitle: ""
-title: "Kubeflow Trainer Workflow"
+title: "Extending Kubeflow Trainer for ML/Ops usecases"
 ---
 
 ## Kubeflow Trainer out of the box
