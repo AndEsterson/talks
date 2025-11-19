@@ -47,7 +47,8 @@ flowchart LR
   B --> Z
   Z2 --> C(Pods are created .)
   Z3 --> C
-  D --> X
+  C --> X
+  C --> W
   E --> Y(Delete jobs which 
           have been finished .
           for over 1 week)
@@ -76,24 +77,27 @@ flowchart LR
                 Log persistence .]
     foo1["<p style='width:100px;height:0px;margin:0'>Invisible !!!/p>"]:::withmargines
     foo2["<p style='width:100px;height:0px;margin:0'>Invisible !!!/p>"]:::withmargines
-    X1(Logs are forwarded ..
+    X1[(Logs are forwarded ..
       from Alloy to
-      the Loki database)
-    X2(Grafana queries Loki
-      for admin dashboards ..)
-    X3(User facing 
-      web-app queries Loki ..)
-    X4(User directly .
-      queries Loki)
-    X(Pod logs are collected ..
-      by Grafana Alloy)
+      the Loki database)]
+      X2{{ Grafana queries Loki
+      for admin dashboards .. }}
+      X3{{ User facing 
+      web-app queries Loki .. }}
+      X4{{ User directly .
+      queries Loki }}
+      X( Pod logs are collected ..
+      by Grafana Alloy )
     X2 --> X1
     X3 ---> X1
     X4 ---> X1
     X --> X1
   end
 
-
+  subgraph RDSS .
+    W[(data written to
+        user's RDSS project ..)]
+  end
   subgraph kyverno [Kyverno
                     cleanup .]
     Y
