@@ -4,7 +4,7 @@
     "href": "kubeflow-trainer-proposal/index.html#kubeflow-trainer-out-of-the-box",
     "title": "Kubeflow Trainer Workflow",
     "section": "Kubeflow Trainer out of the box",
-    "text": "Kubeflow Trainer out of the box\n\n\n\n\n\nflowchart LR\n  A(user submits a job .) --&gt; B(TrainJob created .)\n  B --&gt; C(Pods are \n          created .)\n  C --&gt; D(Pods run to \n          completion/failure ..)\n  D --&gt; E(Trainjob is updated .. \n          to reflect\n          completion/failure ..)"
+    "text": "Kubeflow Trainer out of the box\n\n\n\n\n\nflowchart LR\n  A(user submits a job .) --&gt; B(TrainJob created .)\n  B --&gt; C(Pods are .\n          created)\n  C --&gt; D(Pods run to \n          completion/failure ..)\n  D --&gt; E(Trainjob is updated .. \n          to reflect\n          completion/failure ..)"
   },
   {
     "objectID": "kubeflow-trainer-proposal/index.html#some-problems",
