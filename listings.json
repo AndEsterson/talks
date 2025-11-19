@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/hpc-ai/index.html",
+      "/kubeflow-trainer-proposal/index.html",
       "/kubeflow-demo/index.html"
     ]
   }

@@ -6,12 +6,12 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/quarto-contrib/qrcodejs-v1.0.0/qrcode.js"></script><meta charset="utf-8">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.26">
 
   <meta name="author" content="Andrew Esterson">
-  <title>Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle</title>
+  <meta name="dcterms.date" content="2025-10-19">
+  <title>Kubeflow Trainer Workflow</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -29,75 +29,8 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
-  <link rel="stylesheet" href="css/style.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -199,36 +132,30 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Using Kubeflow to Build HPC Tailored for the AI/ML Lifecycle</h1>
+  <h1 class="title">Kubeflow Trainer Workflow</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
 Andrew Esterson 
 </div>
-        <p class="quarto-title-affiliation">
-            University College London
-          </p>
-    </div>
+</div>
 </div>
 
+  <p class="date">2025-10-19</p>
 </section>
-<section id="when-we-say-ml-lifecycle-what-do-we-mean" class="slide level2">
-<h2>When we say ML Lifecycle, what do we mean?</h2>
+<section id="kubeflow-trainer-out-of-the-box" class="slide level2">
+<h2>Kubeflow Trainer out of the box</h2>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  A(Foundation dataset) --&gt; B(Foundation model training)
-  B --&gt; C(Model finetuning)
-  H(Finetuning dataset) --&gt; C
-  C --&gt; G[Model evaluation]
-  G --&gt; C
-  C --&gt; D{Serve model}
-  D --&gt; E[Research output]
-  D --&gt; F[Ad-hoc testing]
+  A(user submits a job) --&gt; B(TrainJob created)
+  B --&gt; C(Pods are created)
+  C --&gt; D(Pods run to completion/failure)
+  D --&gt; E(Trainjob is updated to reflect completion/failure)
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -236,206 +163,70 @@ Andrew Esterson
 </div>
 </div>
 </section>
-<section id="our-platform" class="slide level2">
-<h2>Our platform</h2>
+<section id="some-problems" class="slide level2">
+<h2>Some problems</h2>
 <ul>
-<li><p>For UCL researchers (and external users in the long term)</p></li>
-<li><p>Uses Kubeflow, an Open Source project designed to deploy into a Kubernetes cluster</p></li>
-<li><p>Our cluster currently has ~8TB of memory, ~600 cpu cores, &gt;4TB total GPU VRAM - mostly NVIDIA A100 40GB and 80GB with 8-way NVLinks</p></li>
-<li><p>Built on top of a larger UCL on-prem cluster (which means the total resources above are flexible)</p></li>
+<li>What if the pods need to queue for resources? We have no gang scheduling, no shared resource pools, and no fairness scheduling</li>
+<li>How does the user see the logs for the job? Currently they must manually watch the pod logs in real time</li>
+<li>What happens to stale Trainjobs? Currently they stay there forever, steadily increaasing the size of the etcd database</li>
 </ul>
 </section>
-<section id="so-what-does-it-do" class="slide level2">
-<h2>So what does it do?</h2>
-<p>Converts this</p>
+<section id="updated-kubeflow-trainer" class="slide level2">
+<h2>Updated Kubeflow Trainer</h2>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  A(Foundation dataset) --&gt; B(Foundation model training)
-  B --&gt; C(Model finetuning)
-  H(Finetuning dataset) --&gt; C
-  C --&gt; G[Model evaluation]
-  G --&gt; C
-  C --&gt; D{Serve model}
-  D --&gt; E[Research output]
-  D --&gt; F[Ad-hoc testing]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="so-what-does-it-do-1" class="slide level2">
-<h2>So what does it do?</h2>
-<p>Into this</p>
+  A(user submits a job) --&gt; B(TrainJob created)
+  C --&gt; D(Pods run to 
+          completion or failure)
+  D --&gt; E(Trainjob is updated to reflect 
+          completion or failure)
+  B --&gt; Z
+  Z2 --&gt; C(Pods are created)
+  Z3 --&gt; C(Pods are created)
+  D --&gt; loki
+  E --&gt; Y(Kyverno ClusterCleanupPolicy cleans jobs which have been complete or failed for longer than 1 week)
 
-<img data-src="images/kubeflow-pipelines-diagram.png" class="r-stretch"></section>
-<section id="workflow" class="slide level2">
-<h2>Workflow</h2>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>submit_pipeline.py</strong></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="submit_pipeline.py"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> kfp</span>
-<span id="cb1-2"><a></a><span class="im">import</span> kfp.dsl</span>
-<span id="cb1-3"><a></a></span>
-<span id="cb1-4"><a></a><span class="at">@kfp.dsl.pipeline</span></span>
-<span id="cb1-5"><a></a><span class="kw">def</span> my_pipeline():</span>
-<span id="cb1-6"><a></a>  <span class="co">"""This function specifies the pipeline spec."""</span></span>
-<span id="cb1-7"><a></a>  ...</span>
-<span id="cb1-8"><a></a></span>
-<span id="cb1-9"><a></a>kfp_client <span class="op">=</span> kfp.Client()</span>
-<span id="cb1-10"><a></a>kfp_client.create_run_from_pipeline_func(my_pipeline)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>terminal</strong></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-filename="terminal"><pre class="sourceCode numberSource console number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a></a>python3 ./submit_pipeline.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="workflow-1" class="slide level2">
-<h2>Workflow</h2>
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>model_spec.yaml</strong></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-filename="model_spec.yaml"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> serving.kserve.io/v1beta1</span></span>
-<span id="cb3-2"><a></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> InferenceService</span></span>
-<span id="cb3-3"><a></a><span class="fu">metadata</span><span class="kw">:</span></span>
-<span id="cb3-4"><a></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> my-inference-model</span></span>
-<span id="cb3-5"><a></a><span class="fu">spec</span><span class="kw">:</span></span>
-<span id="cb3-6"><a></a><span class="at">  </span><span class="fu">predictor</span><span class="kw">:</span></span>
-<span id="cb3-7"><a></a><span class="at">    </span><span class="fu">model</span><span class="kw">:</span></span>
-<span id="cb3-8"><a></a><span class="at">      </span><span class="fu">modelFormat</span><span class="kw">:</span></span>
-<span id="cb3-9"><a></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> huggingface</span></span>
-<span id="cb3-10"><a></a><span class="at">      </span><span class="fu">resources</span><span class="kw">:</span></span>
-<span id="cb3-11"><a></a><span class="at">        </span><span class="fu">requests</span><span class="kw">:</span></span>
-<span id="cb3-12"><a></a><span class="at">          </span><span class="fu">cpu</span><span class="kw">:</span><span class="at"> </span><span class="st">"32"</span></span>
-<span id="cb3-13"><a></a><span class="at">          </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> 180Gi</span></span>
-<span id="cb3-14"><a></a><span class="at">          </span><span class="fu">nvidia.com/gpu</span><span class="kw">:</span><span class="at"> </span><span class="st">"8"</span></span>
-<span id="cb3-15"><a></a><span class="at">          </span><span class="fu">ephemeral-storage</span><span class="kw">:</span><span class="at"> 400Gi</span></span>
-<span id="cb3-16"><a></a><span class="at">      </span><span class="fu">storageUri</span><span class="kw">:</span><span class="at"> s3://models-a-esterson/my-inference-model</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="workflow-2" class="slide level2">
-<h2>Workflow</h2>
-
-<img data-src="images/kubeflow-notebook-ui.png" class="r-stretch"></section>
-<section id="workflow-3" class="slide level2">
-<h2>Workflow</h2>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-  subgraph S4 [Centralised UCL Storage]
-    A(Foundation dataset)
-    H(Finetuning dataset)
-  end
-
-  A --&gt; B(Foundation model training)
-  H --&gt; C(Model finetuning)
-
-  subgraph S1 [Kubeflow Pipelines]
-    B --&gt; C
-    C --&gt; G[Model evaluation]
-    G --&gt; C
-  end
-
-  subgraph S2 [Kserve]
-    D{Serve model}
-  end
-
-
-  subgraph S3 [Kubeflow Notebooks]
-    F[Ad-hoc testing]
-  end
-
-  C --&gt; D
-  D --&gt; E(Research Output)
-  D --&gt; F
-
-  style S1 fill:#add8e6,fill-opacity:0.25,stroke:#5b9bd5,stroke-width:1px
-  style S2 fill:#90ee90,fill-opacity:0.25,stroke:#70ad47,stroke-width:1px
-  style S3 fill:#f0ee90,fill-opacity:0.25,stroke:#f0ad47,stroke-width:1px
-  style S4 fill:#d9b3ff,fill-opacity:0.25,stroke:#9b59b6,stroke-width:1px
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="workflow-4" class="slide level2">
-<h2>Workflow</h2>
-<ul>
-<li>All of these components share common:
-<ul>
-<li>storage</li>
-<li>resource quotas</li>
-<li>authentication</li>
-</ul></li>
-</ul>
-</section>
-<section id="currently-our-users-are" class="slide level2">
-<h2>Currently our users are…</h2>
-<ul>
-<li><p>Serving a model using Kserve to run OCR text recognition without data leaving the UCL network</p></li>
-<li><p>Finetuning a language model to use for a RAG application</p></li>
-<li><p>Training foundation vision models for medical imaging</p></li>
-<li><p>We’d like to give access to more users to explore loads more problems!</p></li>
-</ul>
-</section>
-<section id="challenges" class="slide level2">
-<h2>Challenges</h2>
-<ul>
-<li>It takes time for people to adapt to a new framework
-<ul>
-<li>We need to write really good documentation!</li>
-</ul></li>
-<li>Users can’t be expected to be Kubernetes experts
-<ul>
-<li>We need to abstract away complexity</li>
-</ul></li>
-<li>The ecosystem for HPC on Kubernetes is still developing
-<ul>
-<li>Meaning we have to do more internal plumbing than usual</li>
-</ul></li>
-</ul>
-</section>
-<section id="where-do-we-go-from-here" class="slide level2">
-<h2>Where do we go from here?</h2>
-<ul>
-<li><p>Expanding access to more users so that we can write better docs, fix bugs and improve performance</p></li>
-<li><p>Potentially expand the services we offer</p></li>
-<li><p>Build higher-level abstractions and integrations (e.g Github Actions)</p></li>
-<li><p>Linking the cluster to a cloud provider so that we can dip into the cloud when demand spikes?</p></li>
-</ul>
-</section>
-<section id="section" class="title-slide slide level1 center" data-menu-title="QR Code">
-<h1></h1>
-<div class="quarto-layout-panel" data-layout="[22,78]">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 22.0%;justify-content: flex-start;">
-<p>Slides at <a href="https://andesterson.github.io/talks/hpc-ai">https://andesterson.github.io/talks/hpc-ai</a></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 78.0%;justify-content: flex-start;">
-<div id="" class="qrcode"></div>
-<script type="text/javascript">
-(function() {
-  var script = document.currentScript;
-  var qrcode = script.previousElementSibling;
-  qrcode.qrcode = new QRCode(qrcode, {"colorDark":"#ffffff","colorLight":"#000000","height":"550","text":"https://andesterson.github.io/talks/hpc-ai","width":"550"});
-  script.remove();
-})();
-</script>
+  subgraph volcano [Volcano - Scheduler]
+    direction LR
+    Z(Volcano PodGroup is created)
+    Z1(Check that
+      enough resources are
+      available to schedule
+      the whole TrainJob)
+    Z2(Borrow resources from other pools
+      if required and allowed)
+    Z3(Reclaim resources from other pools
+        if required and possible)
     
+    Z --&gt; Z1
+    Z1 --&gt; Z2
+    Z1 --&gt; Z3
+  end
+
+  subgraph loki [Loki - Log persistence]
+    X(Pod logs are collected
+      by Grafana Alloy)
+    X1(logs are forwarded
+      from Alloy to
+      the Loki database)
+    X2(Grafana queries Loki
+      for admin dashboards)
+    X3(User facing web-app queries Loki)
+    X4(User directly queries Loki)
+    X --&gt; X1
+  end
+
+
+  subgraph kyverno [Kyverno - cleanup and validation]
+    Y
+  end
+</pre>
+</div>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
@@ -444,7 +235,6 @@ Andrew Esterson
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
-<p><img src="images/arc-logo.svg" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
