@@ -10,10 +10,14 @@ title: "Kubeflow Trainer Workflow"
 
 ```{mermaid}
 flowchart LR
-  A(user submits a job) --> B(TrainJob created)
-  B --> C(Pods are created)
-  C --> D(Pods run to completion/failure)
-  D --> E(Trainjob is updated to reflect completion/failure)
+  A(user submits a job .) --> B(TrainJob created .)
+  B --> C(Pods are 
+          created .)
+  C --> D(Pods run to 
+          completion/failure ..)
+  D --> E(Trainjob is updated .. 
+          to reflect
+          completion/failure ..)
 ```
 
 ## Some problems
@@ -25,50 +29,73 @@ flowchart LR
 ## Updated Kubeflow Trainer
 
 ```{mermaid}
+%%| fig-width: 100
+%%| fig-height: 100
+%%{init: {
+"flowchart": {
+  "rankSpacing": 40
+}
+}}%%
 flowchart LR
-  A(user submits a job) --> B(TrainJob created)
+  classDef withmargines fill-opacity:0.0,color:#FFFFFF,stroke-width:0px;
+  A(User submits a job .) --> B(TrainJob created .)
   C --> D(Pods run to 
-          completion or failure)
-  D --> E(Trainjob is updated to reflect 
-          completion or failure)
+          completion/failure .)
+  D --> E(Trainjob is updated ..
+          to reflect 
+          completion/failure ..)
   B --> Z
-  Z2 --> C(Pods are created)
-  Z3 --> C(Pods are created)
-  D --> loki
-  E --> Y(Kyverno ClusterCleanupPolicy cleans jobs which have been complete or failed for longer than 1 week)
+  Z2 --> C(Pods are created .)
+  Z3 --> C
+  D --> X
+  E --> Y(Delete jobs which 
+          have been finished .
+          for over 1 week)
 
-  subgraph volcano [Volcano - Scheduler]
+  subgraph volcano [Volcano
+                    Scheduler .]
     direction LR
-    Z(Volcano PodGroup is created)
-    Z1(Check that
-      enough resources are
+    Z(Volcano PodGroup ..
+      created)
+    Z1(Check enough resources ..
       available to schedule
-      the whole TrainJob)
-    Z2(Borrow resources from other pools
-      if required and allowed)
-    Z3(Reclaim resources from other pools
-        if required and possible)
+      the TrainJob)
+    Z2(Borrow resources
+      from other pools
+      if required and allowed ..)
+    Z3(Reclaim resources
+      from other pools
+      if required and possible ..)
     
     Z --> Z1
     Z1 --> Z2
     Z1 --> Z3
   end
 
-  subgraph loki [Loki - Log persistence]
-    X(Pod logs are collected
-      by Grafana Alloy)
-    X1(logs are forwarded
+  subgraph loki [Loki 
+                Log persistence .]
+    foo1["<p style='width:100px;height:0px;margin:0'>Invisible !!!/p>"]:::withmargines
+    foo2["<p style='width:100px;height:0px;margin:0'>Invisible !!!/p>"]:::withmargines
+    X1(Logs are forwarded
       from Alloy to
       the Loki database)
     X2(Grafana queries Loki
-      for admin dashboards)
-    X3(User facing web-app queries Loki)
-    X4(User directly queries Loki)
+      for admin dashboards ..)
+    X3(User facing 
+      web-app queries Loki ..)
+    X4(User directly .
+      queries Loki)
+    X(Pod logs are collected
+      by Grafana Alloy)
+    X2 --> X1
+    X3 ---> X1
+    X4 ---> X1
     X --> X1
   end
 
 
-  subgraph kyverno [Kyverno - cleanup and validation]
+  subgraph kyverno [Kyverno
+                    cleanup .]
     Y
   end
 ```
