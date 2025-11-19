@@ -1,0 +1,74 @@
+---
+author: "Andrew Esterson"
+date: 2025-10-19
+format: revealjs
+subtitle: ""
+title: "Kubeflow Trainer Workflow"
+---
+
+## Kubeflow Trainer out of the box
+
+```{mermaid}
+flowchart LR
+  A(user submits a job) --> B(TrainJob created)
+  B --> C(Pods are created)
+  C --> D(Pods run to completion/failure)
+  D --> E(Trainjob is updated to reflect completion/failure)
+```
+
+## Some problems
+
+- What if the pods need to queue for resources? We have no gang scheduling, no shared resource pools, and no fairness scheduling 
+- How does the user see the logs for the job? Currently they must manually watch the pod logs in real time
+- What happens to stale Trainjobs? Currently they stay there forever, steadily increaasing the size of the etcd database
+
+## Updated Kubeflow Trainer
+
+```{mermaid}
+flowchart LR
+  A(user submits a job) --> B(TrainJob created)
+  C --> D(Pods run to 
+          completion or failure)
+  D --> E(Trainjob is updated to reflect 
+          completion or failure)
+  B --> Z
+  Z2 --> C(Pods are created)
+  Z3 --> C(Pods are created)
+  D --> loki
+  E --> Y(Kyverno ClusterCleanupPolicy cleans jobs which have been complete or failed for longer than 1 week)
+
+  subgraph volcano [Volcano - Scheduler]
+    direction LR
+    Z(Volcano PodGroup is created)
+    Z1(Check that
+      enough resources are
+      available to schedule
+      the whole TrainJob)
+    Z2(Borrow resources from other pools
+      if required and allowed)
+    Z3(Reclaim resources from other pools
+        if required and possible)
+    
+    Z --> Z1
+    Z1 --> Z2
+    Z1 --> Z3
+  end
+
+  subgraph loki [Loki - Log persistence]
+    X(Pod logs are collected
+      by Grafana Alloy)
+    X1(logs are forwarded
+      from Alloy to
+      the Loki database)
+    X2(Grafana queries Loki
+      for admin dashboards)
+    X3(User facing web-app queries Loki)
+    X4(User directly queries Loki)
+    X --> X1
+  end
+
+
+  subgraph kyverno [Kyverno - cleanup and validation]
+    Y
+  end
+```
