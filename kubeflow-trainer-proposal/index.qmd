@@ -11,8 +11,8 @@ title: "Kubeflow Trainer Workflow"
 ```{mermaid}
 flowchart LR
   A(user submits a job .) --> B(TrainJob created .)
-  B --> C(Pods are 
-          created .)
+  B --> C(Pods are .
+          created)
   C --> D(Pods run to 
           completion/failure ..)
   D --> E(Trainjob is updated .. 
