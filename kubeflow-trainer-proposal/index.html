@@ -152,10 +152,14 @@ Andrew Esterson
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  A(user submits a job) --&gt; B(TrainJob created)
-  B --&gt; C(Pods are created)
-  C --&gt; D(Pods run to completion/failure)
-  D --&gt; E(Trainjob is updated to reflect completion/failure)
+  A(user submits a job .) --&gt; B(TrainJob created .)
+  B --&gt; C(Pods are 
+          created .)
+  C --&gt; D(Pods run to 
+          completion/failure ..)
+  D --&gt; E(Trainjob is updated .. 
+          to reflect
+          completion/failure ..)
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -173,55 +177,76 @@ Andrew Esterson
 </section>
 <section id="updated-kubeflow-trainer" class="slide level2">
 <h2>Updated Kubeflow Trainer</h2>
-<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell" data-reveal="true" data-fig-width="100" data-fig-height="100" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-  A(user submits a job) --&gt; B(TrainJob created)
+<pre class="mermaid mermaid-js">%%{init: {
+"flowchart": {
+  "rankSpacing": 40
+}
+}}%%
+flowchart LR
+  classDef withmargines fill-opacity:0.0,color:#FFFFFF,stroke-width:0px;
+  A(User submits a job .) --&gt; B(TrainJob created .)
   C --&gt; D(Pods run to 
-          completion or failure)
-  D --&gt; E(Trainjob is updated to reflect 
-          completion or failure)
+          completion/failure .)
+  D --&gt; E(Trainjob is updated ..
+          to reflect 
+          completion/failure ..)
   B --&gt; Z
-  Z2 --&gt; C(Pods are created)
-  Z3 --&gt; C(Pods are created)
-  D --&gt; loki
-  E --&gt; Y(Kyverno ClusterCleanupPolicy cleans jobs which have been complete or failed for longer than 1 week)
+  Z2 --&gt; C(Pods are created .)
+  Z3 --&gt; C
+  D --&gt; X
+  E --&gt; Y(Delete jobs which 
+          have been finished .
+          for over 1 week)
 
-  subgraph volcano [Volcano - Scheduler]
+  subgraph volcano [Volcano
+                    Scheduler .]
     direction LR
-    Z(Volcano PodGroup is created)
-    Z1(Check that
-      enough resources are
+    Z(Volcano PodGroup ..
+      created)
+    Z1(Check enough resources ..
       available to schedule
-      the whole TrainJob)
-    Z2(Borrow resources from other pools
-      if required and allowed)
-    Z3(Reclaim resources from other pools
-        if required and possible)
+      the TrainJob)
+    Z2(Borrow resources
+      from other pools
+      if required and allowed ..)
+    Z3(Reclaim resources
+      from other pools
+      if required and possible ..)
     
     Z --&gt; Z1
     Z1 --&gt; Z2
     Z1 --&gt; Z3
   end
 
-  subgraph loki [Loki - Log persistence]
-    X(Pod logs are collected
-      by Grafana Alloy)
-    X1(logs are forwarded
+  subgraph loki [Loki 
+                Log persistence .]
+    foo1["&lt;p style='width:100px;height:0px;margin:0'&gt;Invisible !!!/p&gt;"]:::withmargines
+    foo2["&lt;p style='width:100px;height:0px;margin:0'&gt;Invisible !!!/p&gt;"]:::withmargines
+    X1(Logs are forwarded
       from Alloy to
       the Loki database)
     X2(Grafana queries Loki
-      for admin dashboards)
-    X3(User facing web-app queries Loki)
-    X4(User directly queries Loki)
+      for admin dashboards ..)
+    X3(User facing 
+      web-app queries Loki ..)
+    X4(User directly .
+      queries Loki)
+    X(Pod logs are collected
+      by Grafana Alloy)
+    X2 --&gt; X1
+    X3 ---&gt; X1
+    X4 ---&gt; X1
     X --&gt; X1
   end
 
 
-  subgraph kyverno [Kyverno - cleanup and validation]
+  subgraph kyverno [Kyverno
+                    cleanup .]
     Y
   end
 </pre>
